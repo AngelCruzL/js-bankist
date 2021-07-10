@@ -179,15 +179,34 @@ const createUsernames = function (accounts) {
 
 createUsernames(accounts);
 
+const startLogoutTimer = function () {
+  // Set the time to 5 minutes
+  let time = 300;
+
+  const tick = () => {
+    const minutes = String(Math.trunc(time / 60)).padStart(2, 0);
+    const seconds = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${minutes}:${seconds}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    time--;
+  };
+
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+};
+
 // Event handlers
-let currentAccount;
-
-// * Fake always logged in
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
-
-/////////////////////////
+let currentAccount, timer;
 
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
@@ -221,6 +240,9 @@ btnLogin.addEventListener('click', e => {
 
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
+
+    if (timer) clearTimeout(timer);
+    timer = startLogoutTimer();
 
     updateUI(currentAccount);
   }
@@ -257,11 +279,13 @@ btnLoan.addEventListener('click', e => {
   const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      currentAccount.movements.push(amount);
 
-    currentAccount.movementsDates.push(new Date().toISOString());
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    updateUI(currentAccount);
+      updateUI(currentAccount);
+    }, 2500);
   }
 
   inputLoanAmount.value = '';
