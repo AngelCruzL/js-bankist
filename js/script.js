@@ -241,7 +241,7 @@ btnLogin.addEventListener('click', e => {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    if (timer) clearTimeout(timer);
+    if (timer) clearInterval(timer);
     timer = startLogoutTimer();
 
     updateUI(currentAccount);
@@ -270,6 +270,9 @@ btnTransfer.addEventListener('click', e => {
     receiverAcc.movementsDates.push(new Date().toISOString());
 
     updateUI(currentAccount);
+
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -285,6 +288,9 @@ btnLoan.addEventListener('click', e => {
       currentAccount.movementsDates.push(new Date().toISOString());
 
       updateUI(currentAccount);
+
+      clearInterval(timer);
+      timer = startLogoutTimer();
     }, 2500);
   }
 
