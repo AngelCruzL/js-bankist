@@ -1,13 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
-// Data
-
-// DIFFERENT DATA! Contains movement dates, currency and locale
-
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -180,7 +172,6 @@ const createUsernames = function (accounts) {
 createUsernames(accounts);
 
 const startLogoutTimer = function () {
-  // Set the time to 5 minutes
   let time = 300;
 
   const tick = () => {
@@ -193,7 +184,7 @@ const startLogoutTimer = function () {
       clearInterval(timer);
 
       labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
+      containerApp.classList.add('hidden');
     }
 
     time--;
@@ -219,7 +210,7 @@ btnLogin.addEventListener('click', e => {
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
-    containerApp.style.opacity = 100;
+    containerApp.classList.remove('hidden');
 
     const now = new Date();
     const options = {
@@ -309,7 +300,7 @@ btnClose.addEventListener('click', e => {
     );
     accounts.splice(index, 1);
 
-    containerApp.style.opacity = 0;
+    containerApp.classList.add('hidden');
   }
 
   inputCloseUsername.value = inputClosePin.value = '';
@@ -321,17 +312,3 @@ btnSort.addEventListener('click', e => {
   displayMovements(currentAccount, !sortedState);
   sortedState = !sortedState;
 });
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////

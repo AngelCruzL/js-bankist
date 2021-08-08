@@ -105,9 +105,12 @@ nav {
   max-width: 100rem;
   margin: 4rem auto;
 
-  /* NOTE This creates the fade in/out anumation */
-  opacity: 0;
   transition: all 1s;
+}
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 @media (min-width: 1024px) {
